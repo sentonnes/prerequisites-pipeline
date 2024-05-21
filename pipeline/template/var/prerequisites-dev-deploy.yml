@@ -1,0 +1,3 @@
+﻿variables:
+  - group: Dev-Pipeline
+  - group: BIA-Dev-Prerequisites

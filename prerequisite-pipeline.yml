@@ -1,0 +1,49 @@
+pr:
+  autoCancel: true # indicates whether additional pushes to a PR should cancel in-progress runs for the same PR. Defaults to true
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - pipeline/terraform/prerequisite
+    # only run the pipeline if the policy files have changed
+
+trigger:
+  branches:
+    include:
+      - main
+      - 'feat*/*/main' # allow feature main branches
+      - 'Feat*/*/main'
+      - 'bug*/*/main' # allow bugfix main branches
+      - 'Bug*/*/main'
+      - 'fix*/*/main' # allow hotfix main branches
+      - 'Fix*/*/main'
+  paths:
+    include:
+      - pipeline/terraform/prerequisite
+
+variables:
+  TerraformContainer: ukhydrographicoffice/terraform-azure-powershell:1.7.2
+  UbuntuPool: "Mare Nectaris"
+
+pool: $(UbuntuPool)
+
+resources:
+  repositories:
+    - repository: UKHOTemplates
+      type: github
+      endpoint: UKHO
+      name: UKHO/devops-pipelinetemplates
+      ref: refs/heads/feat/gated-infrastructure-deploy-make-optionals
+  containers:
+    - container: TerraformContainer
+      image: ukhydrographicoffice/terraform-azure-powershell:1.7.2
+
+stages:
+  - template: pipeline/template/prerequisites-build-stage.yml
+
+  - template: pipeline/template/prerequisites-deploy-stage.yml
+    parameters:
+      environment: Dev
+      dependsOn:
+        - "Build"

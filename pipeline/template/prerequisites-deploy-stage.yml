@@ -1,0 +1,51 @@
+﻿parameters:
+  - name: environment
+    type: string
+    default: 'dev'
+  - name: condition
+    type: string
+    default: 'succeeded()'
+  - name: dependsOn
+    type: object
+    default: { }
+# - name: terraformContainer
+#   type: string
+
+stages:
+  - stage: "deploy_${{parameters.environment}}"
+    displayName: "Deploy Prerequisites to ${{parameters.environment}}"
+    condition: ${{parameters.condition}}
+    dependsOn:
+      - ${{ each dependsOnThis in parameters.dependsOn }}:
+          - ${{ dependsOnThis }}
+    jobs:
+
+      - job:
+        steps:
+          - task: AzureAppConfiguration@7
+            inputs:
+              azureSubscription: 'Customer-SSO-Access-Control-Dev-P435'
+              AppConfigurationEndpoint: 'https://app-conf-srj.azconfig.io'
+              KeyFilter: 'pipelineKey'
+              Label: 'preq-dev'
+
+          - bash: echo "$(pipelineKey)"
+
+
+      - template: gated-infrastructure-deploy/gated-infrastructure-deploy.yml@UKHOTemplates
+        parameters:
+          AzDOEnvironmentName: "Prerequisites-${{ parameters.environment }}"
+          TFStateResourceGroupName: $(TFStateResourceGroupName)
+          TFStateStorageAccountName: $(TFStateStorageAccountName)
+          TFStateContainerName: "tfstate"
+          TFStateBlobName: "terraform.prerequisites.tfplan"
+          TerraformWorkspace: ${{ parameters.environment }}
+          TerraformArtifactConfigRelativePath: "/"
+          TerraformArtifact: "TerraformArtifact"
+          TerraformContainer: TerraformContainer
+          VariablesTemplateRelativePath: /pipeline/template/var/prerequisites-${{ lower(parameters.environment) }}-deploy.yml
+          TerraformVariableMappings:
+            ARM_CLIENT_ID: $(TERRAFORM-CLIENT-ID)
+            ARM_CLIENT_SECRET: $(TERRAFORM-CLIENT-SECRET)
+            ARM_TENANT_ID: $(TERRAFORM-TENANT-ID)
+            ARM_SUBSCRIPTION_ID: $(TERRAFORM-SUBSCRIPTION-ID)
