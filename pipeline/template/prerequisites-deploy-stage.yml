@@ -24,8 +24,8 @@ stages:
         steps:
           - task: AzureAppConfiguration@7
             inputs:
-              azureSubscription: 'Customer-SSO-Access-Control-Dev-P435'
-              AppConfigurationEndpoint: 'https://app-conf-srj.azconfig.io'
+              azureSubscription: 'Visual Studio Enterprise Subscription'
+              AppConfigurationEndpoint: 'https://srj-app-config.azconfig.io'
               KeyFilter: 'pipelineKey'
               Label: 'preq-dev'
 

@@ -24,9 +24,9 @@ trigger:
 
 variables:
   TerraformContainer: ukhydrographicoffice/terraform-azure-powershell:1.7.2
-  UbuntuPool: "Mare Nectaris"
 
-pool: $(UbuntuPool)
+pool:
+  vmImage: ubuntu-latest
 
 resources:
   repositories:
