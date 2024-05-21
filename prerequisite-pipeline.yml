@@ -30,10 +30,10 @@ pool:
 
 resources:
   repositories:
-    - repository: UKHOTemplates
+    - repository: AzDOTemplates
       type: github
-      endpoint: UKHO
-      name: UKHO/devops-pipelinetemplates
+      endpoint: sentonnes
+      name: sentonnes/devops-pipelinetemplates
       ref: refs/heads/feat/gated-infrastructure-deploy-make-optionals
   containers:
     - container: TerraformContainer

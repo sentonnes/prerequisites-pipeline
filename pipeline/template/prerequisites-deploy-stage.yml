@@ -32,7 +32,7 @@ stages:
           - bash: echo "$(pipelineKey)"
 
 
-      - template: gated-infrastructure-deploy/gated-infrastructure-deploy.yml@UKHOTemplates
+      - template: gated-infrastructure-deploy/gated-infrastructure-deploy.yml@AzDOTemplates
         parameters:
           AzDOEnvironmentName: "Prerequisites-${{ parameters.environment }}"
           TFStateResourceGroupName: $(TFStateResourceGroupName)
