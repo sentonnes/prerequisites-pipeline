@@ -32,20 +32,20 @@ stages:
           - bash: echo "$(Pipeline)"
 
 
-      - template: gated-infrastructure-deploy/gated-infrastructure-deploy.yml@AzDOTemplates
-        parameters:
-          AzDOEnvironmentName: "Prerequisites-${{ parameters.environment }}"
-          TFStateResourceGroupName: $(TFStateResourceGroupName)
-          TFStateStorageAccountName: $(TFStateStorageAccountName)
-          TFStateContainerName: "tfstate"
-          TFStateBlobName: "terraform.prerequisites.tfplan"
-          TerraformWorkspace: ${{ parameters.environment }}
-          TerraformArtifactConfigRelativePath: "/"
-          TerraformArtifact: "TerraformArtifact"
-          TerraformContainer: TerraformContainer
-          VariablesTemplateRelativePath: /pipeline/template/var/prerequisites-${{ lower(parameters.environment) }}-deploy.yml
-          TerraformVariableMappings:
-            ARM_CLIENT_ID: $(TERRAFORM-CLIENT-ID)
-            ARM_CLIENT_SECRET: $(TERRAFORM-CLIENT-SECRET)
-            ARM_TENANT_ID: $(TERRAFORM-TENANT-ID)
-            ARM_SUBSCRIPTION_ID: $(TERRAFORM-SUBSCRIPTION-ID)
+#      - template: gated-infrastructure-deploy/gated-infrastructure-deploy.yml@AzDOTemplates
+#        parameters:
+#          AzDOEnvironmentName: "Prerequisites-${{ parameters.environment }}"
+#          TFStateResourceGroupName: $(TFStateResourceGroupName)
+#          TFStateStorageAccountName: $(TFStateStorageAccountName)
+#          TFStateContainerName: "tfstate"
+#          TFStateBlobName: "terraform.prerequisites.tfplan"
+#          TerraformWorkspace: ${{ parameters.environment }}
+#          TerraformArtifactConfigRelativePath: "/"
+#          TerraformArtifact: "TerraformArtifact"
+#          TerraformContainer: TerraformContainer
+#          VariablesTemplateRelativePath: /pipeline/template/var/prerequisites-${{ lower(parameters.environment) }}-deploy.yml
+#          TerraformVariableMappings:
+#            ARM_CLIENT_ID: $(TERRAFORM-CLIENT-ID)
+#            ARM_CLIENT_SECRET: $(TERRAFORM-CLIENT-SECRET)
+#            ARM_TENANT_ID: $(TERRAFORM-TENANT-ID)
+#            ARM_SUBSCRIPTION_ID: $(TERRAFORM-SUBSCRIPTION-ID)
