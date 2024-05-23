@@ -26,10 +26,10 @@ stages:
             inputs:
               azureSubscription: 'VSES'
               AppConfigurationEndpoint: 'https://srj-app-config.azconfig.io'
-              KeyFilter: 'pipelineKey'
+              KeyFilter: '*'
               Label: 'preq-dev'
 
-          - bash: echo "$(pipelineKey)"
+          - bash: echo "$(Pipeline)"
 
 
       - template: gated-infrastructure-deploy/gated-infrastructure-deploy.yml@AzDOTemplates
