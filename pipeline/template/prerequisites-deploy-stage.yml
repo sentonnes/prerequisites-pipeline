@@ -24,7 +24,7 @@ stages:
         steps:
           - task: AzureAppConfiguration@7
             inputs:
-              azureSubscription: 'Visual Studio Enterprise Subscription'
+              azureSubscription: 'VSES'
               AppConfigurationEndpoint: 'https://srj-app-config.azconfig.io'
               KeyFilter: 'pipelineKey'
               Label: 'preq-dev'
